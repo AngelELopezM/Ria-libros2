@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ria_libros.Models.Libros>
+﻿@model ria_libros.Models.FiltroLibrosViewModel
 
 @{
     ViewData["Title"] = "Listado de libros";
@@ -33,23 +33,23 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Titulo)
+                @Html.DisplayNameFor(model => model.Libros[0].Titulo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Genero)
+                @Html.DisplayNameFor(model => model.Libros[0].Genero)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Autor)
+                @Html.DisplayNameFor(model => model.Libros[0].Autor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.año)
+                @Html.DisplayNameFor(model => model.Libros[0].año)
             </th>
 
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Libros)
         {
             <tr>
                 <td>

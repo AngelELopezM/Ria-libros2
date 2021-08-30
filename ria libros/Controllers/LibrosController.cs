@@ -29,14 +29,17 @@ namespace ria_libros.Controllers
         // GET: Libros
         public async Task<IActionResult> Index()
         {
-            //var libros = from m in _context.Libros
-            //             select m;
-            //if (!string.IsNullOrEmpty(autor))
-            //{
-            //    libros = libros.Where(x => x.Autor == autor);
-            //}
+            var libros = from m in _context.Libros
+                         select m;
 
-            return View(await _context.Libros.ToListAsync());
+            var libroscons = new FiltroLibrosViewModel
+            {
+
+                Libros = await libros.ToListAsync()
+            
+            };
+
+            return View(libroscons);
         }
 
         // GET: Libros/Details/5
