@@ -12,7 +12,7 @@
 <div class="card">
     <h5 class="card-header">Filtros</h5>
     <div class="card-body">
-        <form action="/" method="post">
+        <form asp-controller="Libros" asp-action="index" method="get">
             <div class="row">
                 <div class="col-3">
                     <input type="text" name="titulo" class="form-control" placeholder="Titulo" />
@@ -20,11 +20,16 @@
                 <div class="col-2">
                     <input type="text" name="autor" placeholder="Autor" class="form-control" />
                 </div>
-                @*<div class="col-3">
-                    <select asp-for="Generos" class="form-control" asp-items="Model.Generos">
-                        <option value="Todos" selected>Todos</option>
+                <div class="col-2">
+                    <select asp-for="GenereLibro" name="Genero" class="form-control" asp-items="Model.Generos">
+                        <option value="" selected>Todos</option>
                     </select>
-                </div>*@
+                    
+                </div>
+                <div class="col-2">
+                    <input type="submit" class="btn btn-primary form-control" value="Buscar" />
+                </div>
+                
             </div>
         </form>
     </div>
@@ -66,9 +71,11 @@
                 </td>
 
                 <td>
+                    <a asp-action="" asp-route-id="@item.Id">Descargar</a> |
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
                 </td>
             </tr>
         }

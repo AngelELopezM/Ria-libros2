@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ria_libros.Data;
 using ria_libros.Models;
+using ria_libros.Services;
 
 namespace ria_libros.Controllers
 {
     public class LibrosController : Controller
     {
         private readonly ria_librosContext _context;
+        private Services.Services _services;
 
         public LibrosController(ria_librosContext context)
         {
             _context = context;
+            _services = new Services.Services();
         }
 
 
@@ -29,14 +33,25 @@ namespace ria_libros.Controllers
         // GET: Libros
         public async Task<IActionResult> Index()
         {
+
+
+
+
             var libros = from m in _context.Libros
                          select m;
+            IQueryable<string> Generoquery = from m in _context.Libros
+                                             orderby m.Genero
+                                             select m.Genero;
 
+            /*Para que la vista pueda funcionar debemos pasarle un modelo de este tipo
+             por esa razon construimos un objeto y dentro del objeto le pasamos lo que queremos
+            que reciba la vista*/
             var libroscons = new FiltroLibrosViewModel
             {
 
+                Generos = new SelectList(await Generoquery.Distinct().ToListAsync()),
                 Libros = await libros.ToListAsync()
-            
+
             };
 
             return View(libroscons);
@@ -167,4 +182,5 @@ namespace ria_libros.Controllers
             return _context.Libros.Any(e => e.Id == id);
         }
     }
+    
 }

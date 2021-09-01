@@ -10,6 +10,7 @@ namespace ria_libros.Models
     {
         public List<Libros> Libros { get; set; }
         public SelectList Generos { get; set; }
+        public string GenereLibro { get; set; }
         public string Titulo { get; set; }
         public string Autor { get; set; }
     }
