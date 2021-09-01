@@ -33,11 +33,9 @@
                 <input asp-for="año" class="form-control" />
                 <span asp-validation-for="año" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ubicacion" class="control-label"></label>
-                <input asp-for="ubicacion" class="form-control" />
-                <span asp-validation-for="ubicacion" class="text-danger"></span>
-            </div>
+                <!--Con el atributo accept especificamos el tipo de documento el programa va a aceptar-->
+                <input type="file" class="form-control bg-secondary text-white mb-3" id="autoSizingInputGroup" accept=".pdf">
+                
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
