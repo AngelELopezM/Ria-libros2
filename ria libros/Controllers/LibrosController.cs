@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +29,14 @@ namespace ria_libros.Controllers
 
         public async Task<IActionResult> Welcome()
         {
+            
             return View();
         }
         // GET: Libros
         public async Task<IActionResult> Index()
         {
 
-
+            
 
 
             var libros = from m in _context.Libros
@@ -86,15 +88,36 @@ namespace ria_libros.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Genero,Autor,año,ubicacion")] Libros libros)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Genero,Autor,año,ubicacion")] Libros libros, IFormFile files)
         {
-            if (ModelState.IsValid)
+            
+            /*Aqui validamos si ya existe un libro con el mismo nombre y autor*/
+            var librosexist = _context.Libros.Where(x=> x.Titulo == libros.Titulo && x.Autor == libros.Autor);
+            if (!librosexist.Any())
             {
-                _context.Add(libros);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    /*En la vista tenemos una condicion para que se muestre un mensaje de error, utilizamos el 
+                     viewbag para pasar la data de manera temporal sin la necesidad de persistirla o de tener
+                    que utilizar un modelo*/
+                    ViewBag.validacion = false;
+                    await _services.agregarLibro(files);
+
+                    _context.Add(libros);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(libros);
             }
-            return View(libros);
+            else 
+            {
+                /*En la vista tenemos una condicion para que se muestre un mensaje de error, utilizamos el 
+                     viewbag para pasar la data de manera temporal sin la necesidad de persistirla o de tener
+                    que utilizar un modelo, es una manera rapida de pasar data*/
+                ViewBag.validacion = true;
+                return View(libros);
+            }
+            
         }
 
         // GET: Libros/Edit/5
