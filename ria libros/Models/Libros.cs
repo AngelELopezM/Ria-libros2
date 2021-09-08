@@ -11,14 +11,15 @@ namespace ria_libros.Models
          
         [Key]
         public int Id { get; set; }
-        
+        [Required(ErrorMessage ="Este campo es requerido")]
         [MaxLength(100)]
         public string Titulo { get; set; }
+        [Required(ErrorMessage = "Este campo es requerido")]
         [MaxLength(100)]
         public string Genero { get; set; }
-        
+        [Required(ErrorMessage = "Este campo es requerido")]
         public string Autor { get; set; }
-        
+        [Required(ErrorMessage = "Este campo es requerido")]
         public int año { get; set; }
 
         /*El archivo que vamos a guardas no lo vamos a guardar como binario en la base de datos

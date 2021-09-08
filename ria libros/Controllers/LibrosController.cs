@@ -93,6 +93,7 @@ namespace ria_libros.Controllers
             
             /*Aqui validamos si ya existe un libro con el mismo nombre y autor*/
             var librosexist = _context.Libros.Where(x=> x.Titulo == libros.Titulo && x.Autor == libros.Autor);
+            
             if (!librosexist.Any())
             {
                 if (ModelState.IsValid)
@@ -101,8 +102,10 @@ namespace ria_libros.Controllers
                      viewbag para pasar la data de manera temporal sin la necesidad de persistirla o de tener
                     que utilizar un modelo*/
                     ViewBag.validacion = false;
+                    
                     await _services.agregarLibro(files);
-
+                    //en services tengo una variable publica que guarda la ubicacion del archivo, se la paso al registro y despues lo guardo
+                    libros.ubicacion = _services.ubicacion;
                     _context.Add(libros);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -203,6 +206,26 @@ namespace ria_libros.Controllers
         private bool LibrosExists(int id)
         {
             return _context.Libros.Any(e => e.Id == id);
+        }
+
+        //DownloadFile
+        public async Task<IActionResult> descargarLibro(int id)
+        {
+            /*Aqui buscamos el libro que queremos descargar*/
+            var file = _context.Libros.Where(x => x.Id == id).FirstOrDefault();
+            if (file == null) return null;
+            /*Este es para utilizar la ubicacion que tenemos guardada en la BD y despues dividirla
+             para poder sacar el nombre del archivo*/
+            string[] Filename = file.ubicacion.Split("\\");
+            
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(file.ubicacion, FileMode.Open))
+            {
+                //Aqui le pasamos el archivo a la memoria, para despues finalmennte procesar la descarga
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "application/pdf", Filename[Filename.Length-1]);
         }
     }
     

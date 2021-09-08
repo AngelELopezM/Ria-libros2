@@ -129,7 +129,6 @@ C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\scoped
 C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\ria libros.TagHelpers.input.cache
 C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\ria libros.TagHelpers.output.cache
 C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\ria libros.RazorCoreGenerate.cache
-C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\enman\Desktop\asp.netcore\ria libros\ria libros\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
