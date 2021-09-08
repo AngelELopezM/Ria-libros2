@@ -12,7 +12,7 @@
 <div class="card">
     <h5 class="card-header">Filtros</h5>
     <div class="card-body">
-        <form asp-controller="Libros" asp-action="index" method="get">
+        <form id="FormLibros" name="FormLibros" asp-controller="Libros" asp-action="index" method="get">
             <div class="row">
                 <div class="col-3">
                     <input type="text" name="titulo" class="form-control" placeholder="Titulo" />
@@ -21,13 +21,13 @@
                     <input type="text" name="autor" placeholder="Autor" class="form-control" />
                 </div>
                 <div class="col-2">
-                    <select asp-for="GenereLibro" name="Genero" class="form-control" asp-items="Model.Generos">
+                    <select asp-for="GenereLibro"  class="form-control" asp-items="Model.Generos">
                         <option value="" selected>Todos</option>
                     </select>
                     
                 </div>
                 <div class="col-2">
-                    <input type="submit" class="btn btn-primary form-control" value="Buscar" />
+                    <input type="submit" name="filtrar" id="filtrar" class="btn btn-primary form-control" value="Buscar" />
                 </div>
                 
             </div>
@@ -81,3 +81,5 @@
         }
     </tbody>
 </table>
+
+<script src="~/js/JavaScript.js"></script>

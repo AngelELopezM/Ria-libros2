@@ -21,7 +21,7 @@ namespace ria_libros.Controllers
         public LibrosController(ria_librosContext context)
         {
             _context = context;
-            _services = new Services.Services();
+            _services = new Services.Services(context);
         }
 
 
@@ -33,14 +33,17 @@ namespace ria_libros.Controllers
             return View();
         }
         // GET: Libros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(FiltroLibrosViewModel filtro)
         {
 
-            
 
 
-            var libros = from m in _context.Libros
-                         select m;
+
+            var libros = _services.FiltrarLibros(filtro);
+
+            //from m in _context.Libros
+            //         select m;
+
             IQueryable<string> Generoquery = from m in _context.Libros
                                              orderby m.Genero
                                              select m.Genero;
@@ -51,8 +54,9 @@ namespace ria_libros.Controllers
             var libroscons = new FiltroLibrosViewModel
             {
 
-                Generos = new SelectList(await Generoquery.Distinct().ToListAsync()),
-                Libros = await libros.ToListAsync()
+                Generos = new SelectList( await Generoquery.Distinct().ToListAsync()),
+                Libros = libros
+                //await libros.ToListAsync()
 
             };
 

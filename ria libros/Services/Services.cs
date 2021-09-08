@@ -5,16 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ria_libros.Models;
-
+using ria_libros.Data;
 
 namespace ria_libros.Services
 {
     public class Services
     {
-
-        public Services()   
+        private readonly ria_librosContext _context;
+        public Services(ria_librosContext context)   
         {
-            
+            _context = context;
         }
             public  string directorioLibros, ubicacion;
         
@@ -67,7 +67,27 @@ namespace ria_libros.Services
             
             
         }
-        
+        public List<Libros> FiltrarLibros(FiltroLibrosViewModel filtro)
+        {
+            var libros = from m in _context.Libros
+                         select m;
+            if (!string.IsNullOrEmpty(filtro.Titulo))
+            {
+                libros = libros.Where(x => x.Titulo.Contains(filtro.Titulo.ToString()));
+            }
+            if (!string.IsNullOrEmpty(filtro.Autor))
+            {
+                libros = libros.Where(x => x.Autor.Contains(filtro.Autor.ToString()));
+            }
+            if (!string.IsNullOrEmpty(filtro.GenereLibro))
+            {
+                if (filtro.GenereLibro != "Todos")
+                {
+                    libros = libros.Where(x => x.Genero == filtro.GenereLibro.ToString());
+                }
+            }
+            return libros.ToList();
+        }
       /*  public string conseguirDirectorioActual() 
         {
             //Aqui aqui conseguimos el directorio en el cual el programa se esta ejecutando,
