@@ -16,7 +16,8 @@ namespace ria_libros.Services
         {
             
         }
-        string directorioLibros, ubicacion;
+            public  string directorioLibros, ubicacion;
+        
         
         #region metodos
 
@@ -29,6 +30,7 @@ namespace ria_libros.Services
                 CrearCarpetaGuardadoGeneral(file);
                 var fileName = Path.GetFileNameWithoutExtension(file.FileName);
                 var filePath = Path.Combine(directorioLibros, file.FileName);
+                
                 ubicacion = filePath;
                 var extension = Path.GetExtension(file.FileName);
                 if (!File.Exists(filePath))
