@@ -1,6 +1,7 @@
 ﻿/*TODO ESTE CODIGO VIENE DE LA DOCUMENTACION DE BOOTSTRAP*/
 
 //Este es el JS para mostrar la alerta que si el nombre del autor y el nombre del libro ya estan en el sistema
+
 var alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 var alertTrigger = document.getElementById('liveAlertBtn')
 
@@ -37,3 +38,5 @@ if (alertTrigger) {
             }, false)
         })
 })()
+//******************************************************************
+

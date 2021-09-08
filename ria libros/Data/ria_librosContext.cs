@@ -9,6 +9,8 @@ namespace ria_libros.Data
 {
     public class ria_librosContext : DbContext
     {
+        
+
         public ria_librosContext (DbContextOptions<ria_librosContext> options)
             : base(options)
         {
