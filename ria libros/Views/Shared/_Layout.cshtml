@@ -25,9 +25,35 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Libros" asp-action="Privacy">Acerca de la web</a>
                         </li>
                     </ul>
+
+                    <!--Me quede aqui trabajando con el inicio de sesion de usuarios administradores-->
+                    <form asp-controller="Libros" asp-action="Index" method="get">
+                        <div class="row justify-content-end">
+                            <label class="align-self-center mr-3" for="usuario"> Administradores</label>
+                            <input class="form-control col-2 mr-3" type="text" id="usuario" name="usuario" placeholder="Usuario" />
+                            <input class="form-control col-2 mr-3" type="text" id="contra" name="contra" placeholder="Contraseña" />
+                            <input type="submit" class="btn btn-primary form-control col-2" value="Iniciar sesion" />
+                        </div>
+
+                    </form>
+
+
                 </div>
+
+
             </div>
         </nav>
+        <div class="row justify-content-center">
+            <div class="col-10">
+                @if (ViewBag.ConfirmAdmin == false)
+                {<!--Me quede trabajando con las condiciones para que se pueda editar y eliminar y las alertas-->
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Oops...</strong> Usuario o contraseña invalida
+                        
+                    </div>
+                }
+            </div>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -42,6 +68,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

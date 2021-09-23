@@ -1,5 +1,6 @@
 ﻿@model ria_libros.Models.FiltroLibrosViewModel
 
+
 @{
     ViewData["Title"] = "Listado de libros";
 }
@@ -21,19 +22,26 @@
                     <input type="text" name="autor" placeholder="Autor" class="form-control" />
                 </div>
                 <div class="col-2">
-                    <select asp-for="GenereLibro"  class="form-control" asp-items="Model.Generos">
+                    <select asp-for="GenereLibro" class="form-control" asp-items="Model.Generos">
                         <option value="" selected>Todos</option>
                     </select>
-                    
+
                 </div>
                 <div class="col-2">
                     <input type="submit" name="filtrar" id="filtrar" class="btn btn-primary form-control" value="Buscar" />
                 </div>
-                
+
             </div>
         </form>
     </div>
 </div>
+@if (ViewBag.IsAdmin == false)
+{<!--Me quede trabajando con las condiciones para que se pueda editar y eliminar y las alertas-->
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Oops...</strong> Esta accion solo puede ser ejecutada por un administrador
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 <table class="table">
     <thead>
         <tr>
@@ -71,15 +79,15 @@
                 </td>
 
                 <td>
-                    <a asp-action="descargarLibro" asp-route-id="@item.Id">Descargar</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Borrar</a>
 
+
+                    <a asp-action="descargarLibro" asp-route-id="@item.Id">Descargar</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id" id="Editar" name="Editar" disabled>Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" id="Eliminar" disabled>Eliminar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<script src="~/js/JavaScript.js"></script>

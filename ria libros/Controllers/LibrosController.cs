@@ -17,11 +17,13 @@ namespace ria_libros.Controllers
     {
         private readonly ria_librosContext _context;
         private Services.Services _services;
+        private bool admin;
 
         public LibrosController(ria_librosContext context)
         {
             _context = context;
             _services = new Services.Services(context);
+            
         }
 
 
@@ -33,16 +35,20 @@ namespace ria_libros.Controllers
             return View();
         }
         // GET: Libros
-        public async Task<IActionResult> Index(FiltroLibrosViewModel filtro)
+        public async Task<IActionResult> Index(FiltroLibrosViewModel filtro, UsuariosAdmin usuarios)
         {
+            if (!string.IsNullOrWhiteSpace(usuarios.Usuario))
+            {
+               ViewBag.ConfirmAdmin = _services.ConfirmAdmin(usuarios);
+               
+            }
 
-
-
+            
+            ViewBag.IsAdmin = TempData["IsAdmin"];
 
             var libros = _services.FiltrarLibros(filtro);
 
-            //from m in _context.Libros
-            //         select m;
+            
 
             IQueryable<string> Generoquery = from m in _context.Libros
                                              orderby m.Genero
@@ -56,7 +62,7 @@ namespace ria_libros.Controllers
 
                 Generos = new SelectList( await Generoquery.Distinct().ToListAsync()),
                 Libros = libros
-                //await libros.ToListAsync()
+                
 
             };
 
@@ -129,7 +135,15 @@ namespace ria_libros.Controllers
 
         // GET: Libros/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
+        {   
+            /*Aqui decimos que si la persona que va a editar el documento no es un admin pues entonces lo va a returnar
+             a la vista de index*/
+            if (!admin)
+            {
+                TempData["IsAdmin"] = false;
+                /*Utilizamos este redirectToaction para volver a llamar la accion del index si el usuario no es un admin*/
+                return RedirectToAction("Index");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -150,6 +164,8 @@ namespace ria_libros.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Genero,Autor,año,ubicacion")] Libros libros)
         {
+            
+
             if (id != libros.Id)
             {
                 return NotFound();
@@ -181,6 +197,11 @@ namespace ria_libros.Controllers
         // GET: Libros/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!admin)
+            {
+                TempData["IsAdmin"] = false;
+                return RedirectToAction("Index");
+            }
             if (id == null)
             {
                 return NotFound();

@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ria_libros.Data;
 
 namespace ria_libros.Migrations
 {
     [DbContext(typeof(ria_librosContext))]
-    partial class ria_librosContextModelSnapshot : ModelSnapshot
+    [Migration("20210916202533_tabla_usuariosAdming")]
+    partial class tabla_usuariosAdming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

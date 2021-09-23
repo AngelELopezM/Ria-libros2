@@ -17,5 +17,6 @@ namespace ria_libros.Data
         }
 
         public DbSet<ria_libros.Models.Libros> Libros { get; set; }
+        public DbSet<ria_libros.Models.UsuariosAdmin> UsuaiosAdmin { get; set; }
     }
 }

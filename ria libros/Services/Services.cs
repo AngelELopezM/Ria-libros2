@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 using ria_libros.Models;
 using ria_libros.Data;
 
+
 namespace ria_libros.Services
 {
     public class Services
     {
         private readonly ria_librosContext _context;
+        public bool admin= false;
+        
         public Services(ria_librosContext context)   
         {
             _context = context;
+            
         }
             public  string directorioLibros, ubicacion;
         
@@ -87,6 +91,30 @@ namespace ria_libros.Services
                 }
             }
             return libros.ToList();
+        }
+
+        /*Aqui utilizamos para saber si el usuario que ingresaron es un admin(LOS ADMIN SON LOS UNICOS QUE TIENEN DERECHO A EDITAR Y ELIMINAR LIBROS O INFORMACION)*/
+        public bool ConfirmAdmin(UsuariosAdmin usuario)
+        {
+            try
+            {
+                
+                var listadoAdmin = from m in _context.UsuaiosAdmin
+                                   select m;
+                listadoAdmin = listadoAdmin.Where(x => x.Usuario == usuario.Usuario && x.Contra == usuario.Contra);
+                if (listadoAdmin.Any())
+                {
+                    return true;
+                }
+                
+                return false; 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
       /*  public string conseguirDirectorioActual() 
         {

@@ -73,7 +73,9 @@ body {
 
 /*Aqui empieza mi propio codigo CSS*/
 
-
+.desabilitarLink{
+    pointer-events: none;
+}
 .centrarBienvenida 
 {
     margin: auto;

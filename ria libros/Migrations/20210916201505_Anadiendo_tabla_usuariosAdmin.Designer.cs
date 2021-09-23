@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ria_libros.Data;
 
 namespace ria_libros.Migrations
 {
     [DbContext(typeof(ria_librosContext))]
-    partial class ria_librosContextModelSnapshot : ModelSnapshot
+    [Migration("20210916201505_Anadiendo_tabla_usuariosAdmin")]
+    partial class Anadiendo_tabla_usuariosAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,24 +50,6 @@ namespace ria_libros.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Libros");
-                });
-
-            modelBuilder.Entity("ria_libros.Models.UsuariosAdmin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Contra")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Usuario")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UsuaiosAdmin");
                 });
 #pragma warning restore 612, 618
         }
